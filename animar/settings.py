@@ -17,11 +17,14 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'y5r7)ujwti(&mxl#)#!b8ys)jg%zw858_(1kdjum%rj6muls@5' 
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '') 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ADMINS = (
+    ('Adam Howard', 'ahoward0920@gmail.com'),
+)
 
+DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'True'
 TEMPLATE_DEBUG = DEBUG
 
 # Email settings
@@ -79,7 +82,7 @@ WSGI_APPLICATION = 'animar.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-if os.environ.get('DJANGO_PRODUCTION', '') == 'true':
+if os.environ.get('DJANGO_PRODUCTION', '') == 'True':
     import dj_database_url
     DATABASES = {}
     DATABASES['default'] = dj_database_url.config()
