@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - About Us{% endblock %}
+
+{% block content %}
+<h2>About Us</h2>
+
+<div class="bubble">
+{% if statement %}
+    {{ statement.as_html|safe }}
+{% else %}
+    <p>No about statement!</p>
+{% endif %}
+</div>
+{% endblock %}

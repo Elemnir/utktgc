@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Event Calendar{% endblock %}
+
+{% block content %}
+<h2>Event Calendar</h2>
+
+{% for event in events %}
+    <div class="bubble">
+        <h3>{{ event.date }}</h3>
+        <a href="/detail/event/{{ event.pk }}/">{{ event.name }}</a>
+    </div>
+{% endfor %}
+
+
+{% endblock %}

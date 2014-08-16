@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - {{ event.name }}{% endblock %}
+
+{% block content %}
+
+<div class="bubble">
+    <h3>{{ event.name }}</h3>
+    <p class="date">{{ event.date }}</p>
+    <p>{{ event.as_html|safe }}</p>
+</div>
+{% endblock %}

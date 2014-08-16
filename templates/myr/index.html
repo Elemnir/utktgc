@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Home{% endblock %}
+
+{% block content %}
+<h2>Recent News</h2>
+
+{% if system_message %}
+<p><strong>{{ system_message }}</strong></p>
+{% endif %}
+
+{% for post in posts %}
+    <div class="bubble">
+    <h3>{{ post.head }}</h3>
+    <p class="date">Posted: {{ post.date }}</p>
+    <p>{{ post.as_html|safe }}</p>
+    </div>
+{% endfor %}
+
+{% endblock %}

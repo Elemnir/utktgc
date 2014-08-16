@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Post Archive{% endblock %}
+
+{% block content %}
+<h2>Post Archive</h2>
+
+{% for post in posts %}
+    <div class="bubble">
+        {{ post.date }} <a href="/detail/post/{{ post.pk }}/">{{ post.head }}</a>
+    </div>
+{% endfor %}
+
+{% endblock %}

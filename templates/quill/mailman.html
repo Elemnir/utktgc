@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Send Email{% endblock %}
+
+{% block content %}
+<h2>Send mass message:</h2>
+
+{% if msg %}
+<p>{{msg}}</p>
+{% endif %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <div class="fieldWrapper">
+        <label class="formField" for="id_subject">Subject:</label><br>
+        {{ form.subject.errors }}
+        {{ form.subject }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <label class="formField" for="id_message">Message Body:</label><br>
+        {{ form.message.errors }}
+        {{ form.message }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <label class="formField" for="id_taglist">Groups That Should Recieve This Message:</label><br>
+        {{ form.taglist.errors }}
+        {{ form.taglist }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <input type="submit" value="Send Mass Email"/>
+    </div>
+</form>
+{% endblock %}

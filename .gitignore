@@ -1,0 +1,9 @@
+venv
+*.pyc
+*.swp
+*.db
+animar/config.bash
+launch.sh
+media/*
+!media/.gitignore
+

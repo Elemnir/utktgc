@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Profile{% endblock %}
+
+{% block content %}
+<h2>{{ user.username|capfirst }}'s Profile</h2>
+
+{% if msg %}
+<p>{{ msg }}</p>
+{% endif %}
+
+<form action="" method="post">
+{% csrf_token %}
+    <div class="fieldWrapper">
+        <label class="formField" for="id_interests">Select topics you'd like to receive emails about:</label>
+        {{ form.interests.errors }}
+        {{ form.interests }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <input type="submit" value="Update Subscriptions"/>
+    </div>
+</form>
+{% endblock %}
