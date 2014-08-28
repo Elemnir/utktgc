@@ -47,5 +47,5 @@ def calendar(request):
 def archive(request):
     """Display all archived posts in reverse chronological order"""
     return render(request, 'myr/archive.html', {
-        'posts' : Post.objects.all().order_by('date')
+        'posts' : Post.objects.all().order_by('-date')
     })
