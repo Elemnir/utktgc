@@ -7,8 +7,7 @@
 
 {% for event in events %}
     <div class="bubble">
-        <h3>{{ event.date }}</h3>
-        <a href="/detail/event/{{ event.pk }}/">{{ event.name }}</a>
+        {{ event.date }} <a href="/detail/event/{{ event.pk }}/">{{ event.name }}</a>
     </div>
 {% endfor %}
 
