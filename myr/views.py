@@ -1,7 +1,7 @@
-from django.http import Http404
-from django.shortcuts import render, get_object_or_404
-
-from myr.models import Post, Event, AboutStatement
+from django.http            import Http404
+from django.shortcuts       import render, get_object_or_404
+from django.core.paginator  import Paginator, InvalidPage
+from myr.models             import Post, Event, AboutStatement
 
 
 def index(request):
@@ -35,17 +35,29 @@ def detail(request, rtype, val = None):
     })
 
 
-def calendar(request):
+def calendar(request, pagenum=1):
     """Display all events in chronological order"""
-    events = Event.objects.all().order_by('-date')
+    try:
+        allEvents = Paginator(Event.objects.all().order_by('-date'), 25)
+        eventlist = allEvents.page(int(pagenum))
+    
+    except:
+        raise Http404
 
     return render(request, 'myr/calendar.html', {
-        'events' : events,
+        'events' : eventlist,
     })
 
 
-def archive(request):
-    """Display all archived posts in reverse chronological order"""
+def archive(request, pagenum=1):
+    """Display archived posts using a paginator"""
+    try:
+        allPosts = Paginator(Post.objects.all().order_by('-date'), 25)
+        postlist = allPosts.page(int(pagenum))
+
+    except:
+        raise Http404
+
     return render(request, 'myr/archive.html', {
-        'posts' : Post.objects.all().order_by('-date')
+        'posts'     : postlist,
     })

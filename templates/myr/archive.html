@@ -11,4 +11,16 @@
     </div>
 {% endfor %}
 
+<ul class="pagelist">
+{% if posts.has_previous %}
+    <li><a href="{% url 'archive_page' posts.previous_page_number %}">&lt; Prev Page</a></li>
+{% endif %}
+    
+    <li>Page {{ posts.number }}/{{ posts.paginator.num_pages }}</li>
+
+{% if posts.has_next %}
+    <li><a href="{% url 'archive_page' posts.next_page_number %}">Next Page &gt;</a></li>
+{% endif %}
+</ul>
+
 {% endblock %}

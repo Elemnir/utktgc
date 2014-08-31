@@ -11,5 +11,16 @@
     </div>
 {% endfor %}
 
+<ul class="pagelist">
+{% if events.has_previous %}
+    <li><a href="{% url 'calendar_page' events.previous_page_number %}">&lt; Prev Page</a></li>
+{% endif %}
+    
+    <li>Page {{ events.number }}/{{ events.paginator.num_pages }}</li>
+
+{% if events.has_next %}
+    <li><a href="{% url 'calendar_page' events.next_page_number %}">Next Page &gt;</a></li>
+{% endif %}
+</ul>
 
 {% endblock %}

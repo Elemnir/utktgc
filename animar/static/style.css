@@ -100,6 +100,24 @@ a {
     border-radius: 5px;
 }
 
+
+ul.pagelist {
+    list-style: none;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+ul.pagelist li {
+    display: inline;
+}
+
+.pagelist a:link, a:visited {
+    color: #0000FF;
+}
+
 .errorlist {
     padding: 0px 0px 0px 0px;
     margin: 0px 0px 0px 0px;
