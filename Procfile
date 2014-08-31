@@ -1,1 +1,1 @@
-web: gunicorn animar.wsgi
+web: newrelic-admin run-program gunicorn animar.wsgi
