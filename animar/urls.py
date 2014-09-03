@@ -11,6 +11,6 @@ urlpatterns = patterns('',
     url(r'^accounts/', include('tetra.urls')),
     
     url(r'^accounts/profile/$', 'quill.views.profile'),
-
+    url(r'^robots\.txt$', 'zephos.views.robots'),
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
