@@ -6,7 +6,9 @@ from django.shortcuts import render
 logger = logging.getLogger('zephos')
 
 def robots(request):
-    logger.info("robots.txt requested by: {0}".format(request.META['HTTP_USER_AGENT']))
+    logger.info("robots.txt requested by: {0}".format(
+        request.META.get('HTTP_USER_AGENT', 'NOT PROVIDED')
+    ))
     return HttpResponse(
         "# robots.txt for www.utktgc.com" +
         "\nUser-agent: *" +

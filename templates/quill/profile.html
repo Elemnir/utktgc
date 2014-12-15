@@ -11,14 +11,41 @@
 
 <form action="" method="post">
 {% csrf_token %}
+    <h3>Update Email Lists</h3>
     <div class="fieldWrapper">
         <label class="formField" for="id_interests">Select topics you'd like to receive emails about:</label>
-        {{ form.interests.errors }}
-        {{ form.interests }}
+        {{ interestform.interests.errors }}
+        {{ interestform.interests }}
     </div>
     <br>
     <div class="fieldWrapper">
-        <input type="submit" value="Update Subscriptions"/>
+        <input type="submit" name="updateinterests" value="Update Subscriptions"/>
+    </div>
+    <br><hr>
+    <h3>Update Password</h3>
+    <div class="fieldWrapper">
+        <label class="formField" for="id_old_password">Old Password:</label>
+        <br>
+        {{ passwordform.old_password.errors }}
+        {{ passwordform.old_password }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <label class="formField" for="id_new_password1">New Password:</label>
+        <br>
+        {{ passwordform.new_password1.errors }}
+        {{ passwordform.new_password1 }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <label class="formField" for="id_new_password2">Confirm New Password:</label>
+        <br>
+        {{ passwordform.new_password2.errors }}
+        {{ passwordform.new_password2 }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <input type="submit" name="updatepassword" value="Update Password"/>
     </div>
 </form>
 {% endblock %}
