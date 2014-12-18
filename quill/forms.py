@@ -1,5 +1,5 @@
 from django             import forms
-from quill.models       import Member, Tag
+from quill.models       import Member, Tag, Thread, Post
 
 class SendEmailForm(forms.Form):
     subject = forms.CharField(max_length=100)
@@ -23,3 +23,32 @@ class UpdateInterestsForm(forms.ModelForm):
         queryset=Tag.objects.order_by('name'),
         widget=forms.CheckboxSelectMultiple
     )
+
+class CreateThreadForm(forms.Form):
+    title = forms.CharField(max_length=200)
+    body = forms.CharField(widget=forms.Textarea(
+        attrs={'cols':'80','rows':'10'}
+        )
+    )
+
+    def process(self, user=None):
+        cd = self.cleaned_data
+        mem = Member.objects.get(user=user)
+        t = self.cleaned_data.get('title', '')
+        b = self.cleaned_data.get('body', '')
+        
+        thread = Thread(title=t, creator=mem)
+        thread.save()
+        Post(title=t, creator=mem, thread=thread, body=b).save()
+        return thread
+
+class CreatePostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ('body',)
+    body = forms.CharField(
+        widget=forms.Textarea(
+        attrs={'width':'100%'}
+        )
+    )
+

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Forum{% endblock %}
+
+{% block content %}
+<h2>Forum</h2>
+
+{% for t in threads %}
+    <div class="thread">
+        <span class="thread_name"><a href="{% url 'thread' t.pk %}">{{ t.title }}</a></span>
+        <span class="thread_stats">Last Post: {{ t.last_updated }}</span>
+    </div>
+{% endfor %}
+
+<hr>
+<div>
+    <a href="{% url 'add_thread' %}">Add a Thread...</a>
+</div>
+
+<ul class="pagelist">
+{% if threads.has_previous %}
+    <li><a href="{% url 'forum_page' threads.previous_page_number %}">&lt; Prev Page</a></li>
+{% endif %}
+    
+    <li>Page {{ threads.number }}/{{ threads.paginator.num_pages }}</li>
+
+{% if threads.has_next %}
+    <li><a href="{% url 'forum_page' threads.next_page_number %}">Next Page &gt;</a></li>
+{% endif %}
+</ul>
+
+{% endblock %}

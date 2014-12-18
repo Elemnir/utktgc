@@ -41,7 +41,7 @@
                 </ul>
                 <ul class='accountlinks'>
                     {% if user.is_authenticated %}
-                    <li><a class="bubble" href="/accounts/profile/">Logged in as: {{ user.username|capfirst }}</a></li>
+                    <li><a class="bubble" href="/accounts/profile/">{{ user.username }}</a></li>
                     <li><a class="bubble" href="/accounts/logout/">Log Out</a></li>
                     {% else %}
                     <li><a class="bubble" href="/accounts/login/">Login</a></li>

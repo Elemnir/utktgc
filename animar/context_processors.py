@@ -11,6 +11,10 @@ def nav_menu(request):
             {}
         ),
         (
+            { 'name': 'Forum', 'url': reverse('forum')},
+            {}
+        ),
+        (
             { 'name': 'Calendar', 'url': reverse('calendar')},
             {}
         ),

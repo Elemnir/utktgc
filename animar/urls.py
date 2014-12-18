@@ -7,10 +7,9 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     url(r'', include('myr.urls')),
-    url(r'^mail/', include('quill.urls')),
+    url(r'', include('quill.urls')),
     url(r'^accounts/', include('tetra.urls')),
     
-    url(r'^accounts/profile/$', 'quill.views.profile'),
     url(r'^robots\.txt$', 'zephos.views.robots'),
     url(r'^admin/', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - {{ thread.title }}{% endblock %}
+
+{% block content %}
+<h2>{{ thread.title }}</h2>
+
+<div class="post_pagelist">
+Jump to Page: 
+{% for page in posts.paginator.page_range %}
+    <a href="{% url 'thread_page' thread.pk page %}">{{ page }}</a>
+{% endfor %}
+</div>
+
+{% for post in posts %}
+    <div class="post">
+        <div class="post_header">
+            <span class="post_header_creator">{{ post.creator.user }}</span>
+            <span class="post_header_created">{{ post.created }}</span>
+        </div>
+        <div class="post_body">
+            {{ post.body }}
+        </div>
+    </div>
+{% endfor %}
+
+<ul class="pagelist">
+{% if posts.has_previous %}
+    <li><a href="{% url 'thread_page' thread.pk posts.previous_page_number %}">&lt; Prev Page</a></li>
+{% endif %}
+    
+    <li>Page {{ posts.number }}/{{ posts.paginator.num_pages }}</li>
+
+{% if posts.has_next %}
+    <li><a href="{% url 'thread_page' thread.pk posts.next_page_number %}">Next Page &gt;</a></li>
+{% endif %}
+</ul>
+<br>
+<div class="post_comment">
+{% if user.is_authenticated %}
+<form action="" method="post">
+{% csrf_token %}
+    <div class="fieldWrapper">
+        {{ form.body.errors }}
+        {{ form.body }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <input type="submit" value="Post Reply"/>
+    </div>
+</form>
+{% else %}
+<div class="bubble"><p>Please <a href="{% url 'login' %}">Login</a> or <a href="{% url 'register' %}">Register</a> to post.</p></div>
+{% endif %}
+</div>
+{% endblock %}
