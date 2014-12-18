@@ -59,7 +59,7 @@ def profile(request):
 def forum(request, pagenum=1):
     """Display all threads in chronological order"""
     try:
-        threadlist = Paginator(Thread.objects.order_by('sticky', '-created'), 25)
+        threadlist = Paginator(Thread.objects.order_by('-sticky', '-created'), 25)
         threadlist = threadlist.page(int(pagenum))
 
     except:
