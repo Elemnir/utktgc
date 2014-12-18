@@ -16,8 +16,8 @@ admin.site.register(Thread, ThreadAdmin)
 class PostAdmin(admin.ModelAdmin):
     class Meta:
         model = Post
-    list_display = ["title", "thread", "creator", "created"]
-    search_fields = ["title", "creator"]
+    list_display = ["thread", "creator", "created"]
+    search_fields = ["creator",]
 admin.site.register(Post, PostAdmin)
 
 class MemberAdmin(admin.ModelAdmin):

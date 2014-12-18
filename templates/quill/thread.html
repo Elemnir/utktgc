@@ -19,7 +19,7 @@ Jump to Page:
             <span class="post_header_created">{{ post.created }}</span>
         </div>
         <div class="post_body">
-            {{ post.body }}
+            {{ post.as_html|safe }}
         </div>
     </div>
 {% endfor %}

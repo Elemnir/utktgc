@@ -1,5 +1,7 @@
 from django             import forms
+from django.utils.html  import escape
 from quill.models       import Member, Tag, Thread, Post
+
 
 class SendEmailForm(forms.Form):
     subject = forms.CharField(max_length=100)
@@ -36,10 +38,11 @@ class CreateThreadForm(forms.Form):
         mem = Member.objects.get(user=user)
         t = self.cleaned_data.get('title', '')
         b = self.cleaned_data.get('body', '')
+        b = escape(b)
         
         thread = Thread(title=t, creator=mem)
         thread.save()
-        Post(title=t, creator=mem, thread=thread, body=b).save()
+        Post(creator=mem, thread=thread, body=b).save()
         return thread
 
 class CreatePostForm(forms.ModelForm):
@@ -51,4 +54,7 @@ class CreatePostForm(forms.ModelForm):
         attrs={'width':'100%'}
         )
     )
-
+    
+    def clean(self):
+        cd = super(CreatePostForm, self).clean()
+        self.cleaned_data['body'] = escape(cd.get('body',''))

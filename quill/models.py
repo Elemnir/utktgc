@@ -1,7 +1,8 @@
+import markdown
+
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
 from django.contrib.auth.models import User
 
 class Tag(models.Model):
@@ -35,7 +36,6 @@ class Thread(models.Model):
         return self.post_set.latest('updated').updated
 
 class Post(models.Model):
-    title = models.CharField(max_length=200)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     creator = models.ForeignKey(Member, blank=True)
@@ -44,6 +44,9 @@ class Post(models.Model):
 
     def __unicode__(self):
         return u"{} - {} - {}".format(self.creator.user, 
-            self.thread, self.title
+            self.thread, self.body[20:]
         )
+
+    def as_html(self):
+        return markdown.markdown(self.body)
 
