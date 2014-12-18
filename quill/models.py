@@ -43,9 +43,7 @@ class Post(models.Model):
     body = models.TextField()
 
     def __unicode__(self):
-        return u"{} - {} - {}".format(self.creator.user, 
-            self.thread, self.body[20:]
-        )
+        return u"{} - {}".format(self.thread, self.body[:20])
 
     def as_html(self):
         return markdown.markdown(self.body)
