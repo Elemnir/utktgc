@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} - Edit Post{% endblock %}
+
+{% block content %}
+<h2>Edit Post:</h2>
+
+<form action="" method="post">
+{% csrf_token %}
+    <div class="fieldWrapper">
+        {{ form.body.errors }}
+        {{ form.body }}
+    </div>
+    <br>
+    <div class="fieldWrapper">
+        <input type="submit" value="Submit Edit"/>
+    </div>
+</form>
+{% endblock %}

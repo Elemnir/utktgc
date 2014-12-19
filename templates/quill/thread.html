@@ -16,7 +16,12 @@ Jump to Page:
     <div class="post">
         <div class="post_header">
             <span class="post_header_creator">{{ post.creator.user }}</span>
-            <span class="post_header_created">{{ post.created }}</span>
+            <span class="post_header_created">
+                {{ post.created }}
+                {% if user == post.creator.user %}
+                <a href="{% url 'edit_post' post.pk %}">Edit</a>
+                {% endif %}
+            </span>
         </div>
         <div class="post_body">
             {{ post.as_html|safe }}

@@ -48,3 +48,10 @@ class Post(models.Model):
     def as_html(self):
         return markdown.markdown(self.body)
 
+class PostDiff(models.Model):
+    post = models.ForeignKey(Post)
+    created = models.DateTimeField(auto_now_add=True)
+    history = models.TextField()
+
+    def __unicode__(self):
+        return u"Update: {}".format(self.created)

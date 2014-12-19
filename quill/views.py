@@ -1,10 +1,13 @@
-from django.http                    import Http404, HttpResponseRedirect
+from difflib                        import ndiff
+from django.http                    import (Http404, HttpResponseRedirect,
+                                            HttpResponseForbidden)
 from django.shortcuts               import render, redirect, get_object_or_404
 from django.core.paginator          import Paginator, InvalidPage
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms      import PasswordChangeForm
-from quill.models                   import Member, Thread, Post
-from quill.forms                    import SendEmailForm, UpdateInterestsForm, CreateThreadForm, CreatePostForm
+from quill.models                   import Member, Thread, Post, PostDiff
+from quill.forms                    import (SendEmailForm, UpdateInterestsForm, 
+                                            CreateThreadForm, CreatePostForm)
 
 def is_admin(user):
     return user.is_staff
@@ -113,4 +116,33 @@ def thread(request, val=None, pagenum=1):
         'thread'    : thread,
         'posts'     : postlist,
         'form'      : form,
+    })
+
+def edit_post(request, val=None):
+    post = get_object_or_404(Post, pk=val)
+    if post.creator.user != request.user:
+        return HttpResponseForbidden()
+
+    if request.method == 'POST':
+        oldbody = unicode(post.body)
+        form = CreatePostForm(request.POST, instance=post)
+        if form.is_valid():
+            diff = ndiff(unicode(oldbody).splitlines(), 
+                unicode(form.cleaned_data.get('body','')).splitlines()
+            )
+            out = ''
+            for line in diff:
+                if line and line[0] != ' ' and line[0] != '?':
+                    out = out + line.rstrip() + '\n'
+            
+            if out:
+                PostDiff(post=post, history=out).save()
+            
+            form.save()
+            return redirect('thread', val=post.thread.pk)
+    else:
+        form = CreatePostForm(instance=post)
+
+    return render(request, 'quill/edit_post.html', {
+        'form'  : form,
     })

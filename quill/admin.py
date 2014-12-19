@@ -1,4 +1,4 @@
-from quill.models import Tag, Thread, Post, Member
+from quill.models import Tag, Thread, Post, PostDiff, Member
 from django.contrib import admin
 
 class TagAdmin(admin.ModelAdmin):
@@ -13,11 +13,17 @@ class ThreadAdmin(admin.ModelAdmin):
     list_filter = ["creator"]
 admin.site.register(Thread, ThreadAdmin)
 
+class PostDiffInline(admin.StackedInline):
+    model = PostDiff
+    extra = 0
+    ordering = ("-created",)
+
 class PostAdmin(admin.ModelAdmin):
     class Meta:
         model = Post
-    list_display = ["thread", "creator", "created"]
+    list_display = ["__unicode__", "created", "updated"]
     search_fields = ["creator",]
+    inlines = [PostDiffInline]
 admin.site.register(Post, PostAdmin)
 
 class MemberAdmin(admin.ModelAdmin):
