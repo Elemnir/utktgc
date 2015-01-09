@@ -8,6 +8,7 @@ from django.contrib.auth.forms      import PasswordChangeForm
 from quill.models                   import Member, Thread, Post, PostDiff
 from quill.forms                    import (SendEmailForm, UpdateInterestsForm, 
                                             CreateThreadForm, CreatePostForm)
+from HTMLParser                     import HTMLParser
 
 def is_admin(user):
     return user.is_staff
@@ -141,6 +142,7 @@ def edit_post(request, val=None):
             form.save()
             return redirect('thread', val=post.thread.pk)
     else:
+        post.body = HTMLParser().unescape(post.body)
         form = CreatePostForm(instance=post)
 
     return render(request, 'quill/edit_post.html', {
