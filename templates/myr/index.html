@@ -10,11 +10,15 @@
 {% endif %}
 
 {% for post in posts %}
-    <div class="bubble">
-    <h3>{{ post.head }}</h3>
-    <p class="date">Posted: {{ post.date }}</p>
-    <p>{{ post.as_html|safe }}</p>
+<div class="post">
+    <div class="post_header">
+        <span class="post_header_creator">{{ post.head }}</span>
+        <span class="post_header_created">{{ post.date }}</span>
     </div>
+    <div class="post_body">
+        {{ post.as_html|safe }}
+    </div>
+</div>
 {% endfor %}
 
 {% endblock %}
