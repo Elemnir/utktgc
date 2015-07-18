@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}{{ block.super }} - Send Email{% endblock %}
+{% block title %}{{ block.super }} - Mail Lists{% endblock %}
 
 {% block content %}
-<h2>Send mass message:</h2>
+<h2>Access the Mailing Lists:</h2>
 
 {% if msg %}
 <p>{{msg}}</p>
@@ -12,25 +12,22 @@
 <form action="" method="post">
 {% csrf_token %}
     <div class="fieldWrapper">
-        <label class="formField" for="id_subject">Subject:</label><br>
-        {{ form.subject.errors }}
-        {{ form.subject }}
+        <label class="formField" for="id_allmem">
+            All Members:
+        </label>
+        <br>
+        <textarea rows="8" cols="60">{{ allmem }}</textarea>
     </div>
     <br>
+{% for key, list in lists.items %}
     <div class="fieldWrapper">
-        <label class="formField" for="id_message">Message Body:</label><br>
-        {{ form.message.errors }}
-        {{ form.message }}
+        <label class="formField" for="id_key_{{ forloop.counter }}">
+            {{ key }}:
+        </label>
+        <br>
+        <textarea rows="8" cols="60">{{ list }}</textarea>
     </div>
     <br>
-    <div class="fieldWrapper">
-        <label class="formField" for="id_taglist">Groups That Should Recieve This Message:</label><br>
-        {{ form.taglist.errors }}
-        {{ form.taglist }}
-    </div>
-    <br>
-    <div class="fieldWrapper">
-        <input type="submit" value="Send Mass Email"/>
-    </div>
+{% endfor %}
 </form>
 {% endblock %}

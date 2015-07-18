@@ -5,9 +5,9 @@ from django.shortcuts               import render, redirect, get_object_or_404
 from django.core.paginator          import Paginator, InvalidPage
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.forms      import PasswordChangeForm
-from quill.models                   import Member, Thread, Post, PostDiff
-from quill.forms                    import (SendEmailForm, UpdateInterestsForm, 
-                                            CreateThreadForm, CreatePostForm)
+from quill.models                   import Member, Tag, Thread, Post, PostDiff
+from quill.forms                    import (UpdateInterestsForm, CreatePostForm, 
+                                            CreateThreadForm)
 from HTMLParser                     import HTMLParser
 
 def is_admin(user):
@@ -16,19 +16,20 @@ def is_admin(user):
 @login_required
 @user_passes_test(is_admin)
 def mailman(request):
-    """Allow admins to send group emails"""
-    if request.method == 'POST':
-        form = SendEmailForm(request.POST)
-        if form.is_valid():
-            form.process()
-            return render(request, 'quill/mailman.html', {
-                'msg' : 'Success! Emails sent.'
-            })
-    else:
-        form = SendEmailForm()
+    """Allow admins to access the group email lists"""
+    allmem = ", ".join([m.user.email for m in Member.objects.all()])
+    
+    tags = Tag.objects.order_by('name')
+    lists = {}
+    for tag in tags:
+        lists[tag.name] = [m.user.email for m in Member.objects.filter(interests=tag)]
+    
+    for key in lists:
+        lists[key] = ", ".join(lists[key])
 
     return render(request, 'quill/mailman.html', {
-        'form': form,
+        'allmem': allmem,
+        'lists': lists,
     })
 
 @login_required
